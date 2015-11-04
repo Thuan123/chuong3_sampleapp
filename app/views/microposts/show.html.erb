@@ -1,0 +1,42 @@
+<% provide(:title, @microposts.title) %>
+
+<ul>
+    <span class="user">
+       <%= link_to @microposts.title, @microposts %>
+    </span>
+</ul>
+
+<ul class="users">
+    <li id="micropost-<%= @microposts.id %>">
+    <%= link_to avatar_url(@microposts.user,80), @microposts.user %>
+    <span class="user">
+       <%= link_to @microposts.user.name, @microposts.user %>
+    </span>
+    <br>
+  <span class="timestamp">  
+   <br>
+   Posted <%= time_ago_in_words(@microposts.created_at) %> ago.
+  </span>
+</li>
+</ul>
+<ul>
+  <span class="content">
+     <br>
+     <%= @microposts.content %>
+     <%= image_tag @microposts.picture.url if @microposts.picture? %>
+    </span>
+</ul>
+
+<div class="row">
+    <aside class="col-md-4">
+      <%= form_for(@microposts, html: { multipart: true }) do |f| %>
+       <%= render 'shared/error_messages', object: f.object %>
+        <div class="field">
+         <%= f.text_area :content, placeholder: "Compose new micropost..." %>
+        </div>
+        <%= f.submit "Post", class: "btn btn-primary" %>
+  
+      <% end %>
+      
+    </aside>
+</div>
