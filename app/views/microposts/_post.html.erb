@@ -1,0 +1,23 @@
+<ul class="users">
+  <% @microposts.each do |post| %>
+     <li id="micropost-<%= post.id %>">
+  <%= link_to avatar_url(post.user,50), post.user %>
+  <span class="user"><%= link_to post.user.name, post.user %></span>
+  <span class="content">
+    <br>
+    <%= post.content %>
+    <%= image_tag post.picture.url if post.picture? %>
+  </span>
+  
+  <span class="timestamp">  
+   <br>
+   Posted <%= time_ago_in_words(post.created_at) %> ago.
+    <% if current_user?(post.user) %>
+      <%= link_to "delete", post, method: :delete,
+                                       data: { confirm: "You sure?" } %>
+    <% end %>
+  </span>
+
+</li>
+  <% end %>
+</ul>
