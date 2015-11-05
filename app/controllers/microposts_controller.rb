@@ -18,6 +18,8 @@ class MicropostsController < ApplicationController
 
   def show
     @microposts = Micropost.find(params[:id])
+    @comment = @microposts.comments.build
+    @comments=@microposts.comments.includes(:user)
   end
 
   def destroy

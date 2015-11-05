@@ -5,17 +5,9 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-User.create!(name:  "CaoPhuongAnh",
-             email: "thuank56@gmail.com",
-             password:              "pa0974340719",
-             password_confirmation: "pa0974340719",
-             admin: true,
-             activated: true,
-             activated_at: Time.zone.now)
-
 99.times do |n|
   name  = Faker::Name.name
-  email = "example-#{n+1}@railstutorial.org"
+  email = "example-#{n+15}@railstutorial.org"
   password = "password"
   User.create!(name:  name,
                email: email,
@@ -37,3 +29,12 @@ following = users[2..50]
 followers = users[3..40]
 following.each { |followed| user.follow(followed) }
 followers.each { |follower| follower.follow(user) }
+
+#Auto create comment
+Micropost.all.each do |m|
+  5.times do |n|
+    str = Faker::Lorem.sentence(2)
+    i = n+1 
+    Comment.create(content: str, micropost_id: m.id, user_id: i )
+  end
+end

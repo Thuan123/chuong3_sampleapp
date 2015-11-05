@@ -1,8 +1,7 @@
 <% provide(:title, @microposts.title) %>
-
 <ul>
     <span class="user">
-       <%= link_to @microposts.title, @microposts %>
+       <h3><%= link_to @microposts.title, @microposts %></h3>
     </span>
 </ul>
 
@@ -26,10 +25,29 @@
      <%= image_tag @microposts.picture.url if @microposts.picture? %>
     </span>
 </ul>
+<div class="row">
+    <% if @microposts.comments.any? %>
+      <h3>Comments (<%= @microposts.comments.count %>)</h3>      
+    <% end %>
+</div>
+
+<div class="comments">
+  <% @comments.each do |comment| %>
+     <span class="user">
+       <%= link_to comment.user.name, comment.user %>
+     </span>
+     <%= comment.content %>
+     <span class="timestamp">
+       <% if comment.created_at!=nil %>  
+        .Posted <%= time_ago_in_words(comment.created_at) %> ago.
+       <% end %>
+     </span>
+     <br>
+  <% end %>
+</div>
 
 <div class="row">
-    <aside class="col-md-4">
-      <%= form_for(@microposts, html: { multipart: true }) do |f| %>
+      <%= form_for @comment, :url => micropost_comments_path(@microposts)  do |f| %>
        <%= render 'shared/error_messages', object: f.object %>
         <div class="field">
          <%= f.text_area :content, placeholder: "Compose new micropost..." %>
@@ -37,6 +55,4 @@
         <%= f.submit "Post", class: "btn btn-primary" %>
   
       <% end %>
-      
-    </aside>
 </div>
