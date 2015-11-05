@@ -10,7 +10,7 @@ class CommentsController < ApplicationController
   	@comment.micropost= Micropost.find(params[:micropost_id])
      if @comment.save
       flash[:success] = "Comment created!"
-      redirect_to request.referrer
+      redirect_to static_url
      else
       @comments=@microposts.comments.includes(:user)
       render 'microposts/show'     
@@ -36,10 +36,12 @@ class CommentsController < ApplicationController
     	 @microposts = Micropost.find(params[:micropost_id])
     end
     def check_follow
-    	 if !current_user.following?(@microposts.user)
-   	       flash[:danger] = "Please follow user before create comment"
-   	       redirect_to :back
-    	 end
+    	 if current_user!=@microposts.user
+    	  if !current_user.following?(@microposts.user)
+   	        flash[:danger] = "Please follow user before create comment"
+   	        redirect_to :back
+    	  end
+    	end
     end
 
 end
