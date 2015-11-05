@@ -33,7 +33,7 @@ followers.each { |follower| follower.follow(user) }
 #Auto create comment
 Micropost.all.each do |m|
   5.times do |n|
-    str = Faker::Lorem.sentence(2)
+    str = Faker::Lorem.sentence(10)
     i = n+1 
     Comment.create(content: str, micropost_id: m.id, user_id: i )
   end
